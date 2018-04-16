@@ -43,7 +43,8 @@ Alice then sends all of her *Fe(ETH)*, plus 50 percent of her *Fe(BTC)* to Eve f
 The Future transaction is constrained by the *Ferrum* network, such that Bitcoins can only be transacted with *Fe(BTC)* of the exact same value. Although *Fe(BTC)* can freely be transacted by *Fe(ETH)*, external futures are required to happen with exchange rate of 1.
 The obvious question here is what motivates Mike to converts his Bitcoins to *Fe(BTC)*? Once the *Ferrum* network achieves enough maturity the only motivation that Mike needs is access to *Fe* which would allow him to buy goods or exchange crypto-currencies without fees, but until such level of maturity is achieved a market maker may be required to provide liquidity and compensate for the lack of motivation for burning external assets.
 
-<PIC1>
+![Ferrum Plugins](img/ferrum-plugin.png)
+Figure 1. Ferrum nodes have readonly access to external networks
 
 ### External Network Plugins
 
@@ -154,6 +155,10 @@ Major drawback of decentralized ledgers currently in production is the problem o
 A decentralized ledger runs on a distributed network of individual nodes. Such networks are well studied in the context of internet, distributed database systems, and even social networks. Assuming that nodes in a distributed network find their neighbours randomly with a bias toward geographical proximity, we will have an architecture similar to the Internets architecture, but obviously much smaller.
 
 Such networks when represented as graphs are usually consisted of pockets of dense sub graphs connected to create a larger graph. Average distance between nodes, hence the amount of time it takes for a message to reach other nodes grows very slowly even when the network grows very fast. The figure below from (https://arxiv.org/pdf/0706.3322.pdf) shows that the average distance between nodes in such graphs drops sharply after a number between 5 or 10 regardless of the size of the graph.
+
+![Ferrum Plugins](img/distance_from_p.png)
+
+Figure 2. From (https://arxiv.org/pdf/0706.3322.pdf) showing the probability that distance from a given source node in graph is greated than d.
 
 Since the distance between nodes does not grow too fast, load on nodes will grow as fast as the network, hence, size of the network is effectively bound by the processing power of the average node. This is a huge limiting factor. The typical next step to break down the load on the network is sharing, but sharing is not easy for the block-chain because of the consensus mechanism.
 
