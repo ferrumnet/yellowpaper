@@ -4,7 +4,7 @@
 ## Abstract
 Bitcoin and Ether are examples of major digital currencies on the market today. Currently such digital currencies are traded in traditional centralized exchanges. Etherium provides infrastructure for creating tokens on the Etherium blockchain, hence, such tokens can be exchanged using smart contracts and the transaction will be confirmed within the Etherium blockchain. However, a decentralized exchange of assets across different technologies, such as Bitcoin to Ether is not trivial. Additionally, each blockchain technology has its own strengths and weaknesses. The ability of freely moving within technologies can prove extremely useful. In this paper we propose a decentralized network which can cryptographically represent other digital assets used as exchange medium between different assets backed by different centralized or decentralized technologies. We discuss a protocol called **Ferrum** and its implemented cryptocurrency called ***Fe***. The value of every *Fe* is pegged to another crypto-currency and it can be imported or exported in relation to the underlying cryptocurrencies it represents. Users can convert their *Bitcoins* to Fe equivalent and execute countless free transactions on the *Ferrum* network. They can further convert their *Fe* back to any other originating crypto-currency supported by the *Ferrum* network.
 We propose an implementation of *Ferrum* based on a directed acyclic graph (DAG) ledger (similar to IOTA). We claim graph-based decentralized systems have some inherent benefits over traditional block-chain systems such as possibility of free transactions, and better scalability.
- We utilize concepts that we call **Proof of Burn**, **External Proof**, and **Futures** to enable the exchanges without relying on a centralized market maker.
+ We utilize concepts that we call **Proof of Burn**, **External Proof**, and **Futures** to enable cross-chain exchange.
 
 ## Introduction
 
@@ -89,8 +89,9 @@ A future, is a transaction that executes in some future time. *Ferrum* uses two 
 
 ### In-network Exchange
 
-TBD
-
+The in-network exchange is much simpler than cross-chain exchange. The in-network exchange is not also limitted to a single asset. Users can exchange portfolios of assets with one exchange transaction. Alice wants to exchange *a_V = Sigma_i w_i.Fe(i)* which is a portfolio of assets with Bob's *b_V = Sigma_j w_i.Fe(j)*. They have to agree on the exchange beforehand, so *a_V* and *b_V* are known. Alice will create sumbit an exchange transaction *T_ax=T_a,V,b",a",b_V*, where *a* is her address with the values, *V* is short for *a_V*. *b
+* is Bob's address, and *a"* is a roll-back address. Once the exchange transaction is approved on the network two other transactions become possible. 1) Alice can roll back this transaction by submiting *T_ar=T_V,a",t_a_x* which has the samve value as *T_ax*. This transaction is claims *a_V* and requests the value to be added to roll-back address *a"*. 2) Bob can claim the value in *T_ax* by providing the transaction *T_bc=T_t_ax,b",b_V,a"*. This transaction points to *T_ax* as proof and sends the exchange value *b_V* from address *b* to *a"* and at the same time claims *a_V* and requests the value to be added to *b"*.
+Both roll-back and claim transaction point to *T_ax* as proof, but only one of them could be valid at a time. The first transaction between *T_ar* and *T_bc* that gets approved by the network is considered valid. So if Alice beats Bob to rolling her transaction back, Bob cannot claim the exchange and both Alice and Bob get to keep their portfloio. But if Bob claims the exchange transaction before Alice rolls it back the exchange has happened successfully and Alice will gain *b_V* and Bob will gain *a_V*.
 
 ### (Tracing the) Value of *Fe*
 
