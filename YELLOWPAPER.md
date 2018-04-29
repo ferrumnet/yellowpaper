@@ -191,21 +191,21 @@ In summary by introducing flag bearers  as high throughput nodes and randomizing
 
 ## Beyond Proof of Burn
 
-In this paper we proposed the concept of proof of burn (PoB) as the main source of importing value to the *Ferrum* network. PoB is not the only means to import value into the *Ferrum* network. In this section we propose several other ideas on the value import process without going too deep on the technical details.
+In this paper we proposed the concept of proof of burn (PoB) as the main source of importing value to the *Ferrum* network. PoB is not the only means to import value into the *Ferrum* network. In this section we propose several other ideas on the value import process.
 
-Any value burned through PoB will be removed from the original source, hence it require significant commitment to the *Ferrum* network from the user's side. In this section we propose methods in addition to the PoB that are reversible, hence the user does not need to have faith in the *Ferrum*. The reversibility should ideally be guaranteed cryptographically, meaning if Alice imports *1 BTC* to create *1 Fe(BTC)* she would be confident that there is a way for her to get back her original value by destroying the *Fe(BTC)* she has created. The method should also disallow any creation of *Fe(X)* not backed by *X*. 
+Any value burned through PoB will be removed from the original network, hence burning value require significant commitment to the *Ferrum* network from the user's side. In this section we propose methods in addition to the PoB that are reversible such that the user will not need to have faith in the *Ferrum*. The reversibility should ideally be guaranteed cryptographically, meaning when Alice imports *1 BTC* to create *1 Fe(BTC)* she is confident that there is a way for her to get back the original value by destroying the *Fe(BTC)* she has created. Any value import method must prohibit creation of *Fe(X)* not backed by *X*. In other words *1 Fe(X)* can be created if and only if *1 X* is made illiquid. Similarly *1* illiquid *X* can become liquid if 1 *Fe(X)* is destroyed.
 
-Some of the techniques we propose to import value into the *Ferrum* network have the potential of burning the original value with some probability. For example if Alice imports *1 Fe(BTC)* there might be some chance that she would not be able to revert the import and take back her *Fe(BTC)*. She can always use the external exchange transactions to convert her *Fe(BTC)* back to *BTC*, so as long as there is liquidity in the *Ferrum* network she does not need to worry about loosing any value.
+Some of the techniques we propose to import value into the *Ferrum* network have the potential of burning the original value with some probability. For example if Alice imports *1 Fe(BTC)* there might be some chance that she would not be able to revert the import and take back her *Fe(BTC)*. She can always use the external exchange transactions described before to convert her *Fe(BTC)* back to *BTC*, so as long as there is liquidity in the *Ferrum* network she does not need to worry about loosing any value.
 
-Based on the above definition there are three different types of *Fe(X)* in the *Ferrum* network according to the import mechanism. 1) The burned value. Which is the value burned to generate *Fe(X)*. 2) The flammable value, which is the value that can be reverted back to *X* but with some probability it might burn. And 3) The liquid value which can be freely changed back to the original value.
+Based on the above definition there are two categories of *Fe(X)* in the *Ferrum* network based on the import mechanism. 1) The burned value. Which is the value burned to generate *Fe(X)*. And 2) The flammable value, which is the value that can be reverted back to *X* but with some probability it might burn. 
 
 ### Market Behaviours: Bubbles and Crashes
 
 If market suddenly finds a significant trust in the *Ferrum* network or if it develops a significant mistrust in it, there could be  sudden rush to create *Fe(X)* or sell *Fe(X)* to acquire *X*. 
 
-*Ferrum* protocol does not allow *Fe(X)* to be exchange with *X* with any ratio other than *1* so the sell and buy pressure may create secondary markets. Secondary market would only form if there is no liquidity between *X* and *Fe(X)* otherwise if one can always buy *1 Fe(X)* with *1 X* or buy *1 X* with *1 Fe(X)* she has no motivation to pay more to acquire *X* or *Fe(X)*. Formation of the secondary markets are decremental to the idea of *Ferrum*, hence the parameters of the *Ferrum* network should be tuned to minimize the possibility of a sustained secondary market for *Fe(X)*.
+*Ferrum* protocol does not allow *Fe(X)* to be exchanged with *X* with any ratio other than *1* so the sell and buy pressure may create secondary markets. Secondary market would only form if there is no liquidity between *X* and *Fe(X)* otherwise if one can always buy *1 Fe(X)* with *1 X* or buy *1 X* with *1 Fe(X)* she has no motivation to pay more to acquire *X* or *Fe(X)*. Formation of the secondary markets are decremental to the idea of *Ferrum*, hence the parameters of the *Ferrum* network should be tuned to minimize the possibility of a sustained secondary market for *Fe(X)*.
 
-A simple model of liquidity can be used to understand the effect of rush buy or sell on the value of *Fe(X)*. Let *B* be the amount of burned *X* to generate *Fe(X)*. Let *F* be the amount of flammable *X* imported to *Ferrum* that could burn with probability *P_F*. The maximum amount of liquid *Fe(X)* would be *B + F*, from which *F.(1-F_B)* can be taken out at any time. If the original *X* is not burned, user can destroy all the *Fe(X)* they have generated and get their *X* back. 
+A simple model of liquidity can be used to understand the effect of rush buy or sell on the value of *Fe(X)*. Let *B* be the amount of burned *X* to generate *Fe(X)*. Let *F* be the amount of flammable *X* imported to *Ferrum* that could burn with probability *P_F*. The maximum amount of liquid *Fe(X)* would be *B + F*, from which *F.(1-P_F)* can be taken out at any time. If the original *X* is not burned, users can destroy all the *Fe(X)* they have generated and get their *X* back. 
 
 Also let *U* be the total utility value of *Fe(X)*. Utility value of *Fe(X)* is perceived benefit of having *X* in the *Ferrum* ecosystem in the unit of *X*. Utility of *X* is hard to calculate and is dependent on the maturity of the network. For example, if millions of merchants accept *Fe*, the utility of *Fe(X)* could be very high, but if no one has any use for *Fe(X)*, the utility could be very small.
 
@@ -213,9 +213,9 @@ A rush to create *Fe(X)* will not affect its value, because creation of *Fe(X)* 
 
 On the other hand, in a rush to sell *Fe(X)*, *Ferrum* could immediately loose liquidity. User can only buy back *1 X* with *1 Fe(X)*, so if they believe *Fe(X)* is less worthy than *X* they would not engage in such transaction. In such case a secondary market could appear in which users will sell *Fe(X)* for cheap.
 
-If *Fe(X)* can be bought cheaper than *X*, users who own flammable *Fe(X)*, will buy the cheap *Fe(X)* and destroy them to buy back their *X* with a profit. In such event the amount of *Fe(X)* in circulation will drop quickly. The *F.(1-F_B)* will be destroyed by users, and the amount of *Fe(X)* in the market would be *B+F.F_B*. 
+If *Fe(X)* can be bought cheaper than *X*, users who own flammable *Fe(X)*, will buy the cheap *Fe(X)* and destroy them to buy back their *X* with a profit. In such event the amount of *Fe(X)* in circulation will drop quickly. The *F.(1-P_F)* will be destroyed by users, and the amount of *Fe(X)* in the market would be *B+F.P_F*. 
 
-In the event of rush sale, owners of flammable value will profit at the expense of the owners of burned value. On the other hand, as long as there is non-zero *U* (utility of *Fe(X)*) people will acquire *Fe(X)*, and due to the scarcity created from the rush sale, the value of *Fe(X)* will clime back. If we want the value to clime back to *X*, *U* must be greater than *B+F.F_B*. In such case owners of burned *X* will re-gain their losses. In the case that amount of burned value is much lower than *U*, market fluctuations at rush buys and sell events can be more severe. The more precise relationship between *U*, *B*, *F*, and *F_B* can be studied by running market simulations. 
+In the event of rush sale, owners of flammable value will profit at the expense of the owners of burned value. On the other hand, as long as there is non-zero *U* (utility of *Fe(X)*) people will acquire *Fe(X)*, and due to the scarcity created from the rush sale, the value of *Fe(X)* will clime back. If we want the value to clime back to *X*, *U* must be greater than *B+F.P_F*. In such case owners of burned *X* will re-gain their losses. In the case that amount of burned value is much lower than *U*, market fluctuations at rush buys and sell events can be more severe. More precise relationship between *U*, *B*, *F*, and *P_F* can be studied by running market simulations. 
 
 From the above discussion we conclude that a mix of burned and flammable value can improve the stability of the value of *Fe(X)*, and the amount of burned value should be correlated to to *Ferrum's* utility.
 
@@ -236,11 +236,11 @@ This approach has two issues. One is that the fluctuation between the value of *
 
 ### Reverse Contract
 
-The external network to *X* can implement a smart contract which that one can send *X* into. If the smart contract can look into the *Ferrum* network, it allows withdrawals conditioned to destroying *Fe(X)*. And *Ferrum* allows creation of *Fe(X)* by sending *X* into the smart contract. Ethereum network is able to support such smart contracts. We later discuss methods that can allow Ethereum contracts see into the Ferrum network.
+The external network to *X* can implement a smart contract such that one can send *X* into. If the smart contract can look into the *Ferrum* network, it allows withdrawals conditioned to destroying *Fe(X)*. And *Ferrum* allows creation of *Fe(X)* by sending *X* into the smart contract. Ethereum network is able to support such smart contracts. We later discuss methods that can allow Ethereum contracts see into the Ferrum network.
 
 ### Multi-Signature Decentralized Cop
 
-We propose the technique we call multi-signature decentralized cop (MSDC) a another method to reversibly import value into *Ferrum* without requiring the *X* network to be able to see into the *Ferrum* network. The *X* network needs to support the n out of m multi-signature for MSDC to be practical. The n out of m multi-signature means that values can be spent once *n* out of *m* signatures are present. The MSDC algorithm is as follows:
+We propose the technique we call multi-signature decentralized cop (MSDC) a method to reversibly import value into *Ferrum* without requiring the *X* network to be able to see into the *Ferrum* network. The *X* network needs to support the *m* out of *n* multi-signature for MSDC to be practical. The n out of m multi-signature means that values can be spent once *m* out of *n* signatures are present. The MSDC algorithm is as follows:
 
 * User will create a *m* out of *n* multi-signature address.
 * Users submits it request to create *Fe(X)* into the *Ferrum* network.
@@ -256,13 +256,13 @@ To revert the transaction and take back its original *X* user can follow this al
 * Cops pass the secret back to the user.
 * User uses the secrets to spend from the *X* multi-signature address.
 
-The MSDC protocol has a few challenges: First, we need to make sure that user cannot collude with cops. Second, the user should be confident that cops will be around and keep their secrets when she wants to cash out. The *m* out of *n* signatures allows some margin for cop availability, such that only *m* out of *n* cops need to be around when user decides to cash out. The larger the *m* is, it would be harder for the user to collude, yet would be harder to have a large set of constantly available parties. If more than *n-m* parties become permanently unavailable, the original *X* would be effectively burned as it would never be retrievable.
+The MSDC protocol has a few challenges: First, we need to make sure that user cannot collude with cops. Second, the user should be confident that cops will be around and keep their secrets when she wants to cash out. The *m* out of *n* signatures allows some margin for cop availability, such that only *m* out of *n* cops need to be around when user decides to cash out. The larger the *m* is, it would be harder for the user to collude, yet would be harder to have a large set of constantly available parties. If more than *n-m* parties become permanently unavailable, the original *X* is effectively burned as it can never be retrievable.
  
 #### Collusion and Exploit Risks
 
 It is possible for the user to collude with cops to retrieve the secrets without buying back and destroying the claimed *Fe(X)*. It is also possible for cops to collude with each other and create fake users to create *Fe(X)* then release the multi-signature *X* without destroying *Fe(X)*. Also a bad actor can potentially create very large number of cops then start a MSDC protocol for a fake user. If she can ensure *m* out of *n* cops are controlled by herself, she can spend her *X* without destroying *Fe(X)*.
 
-To reduce the chance of above attacks, we constrain the ability of becoming a cop. Cops can be created based on PoB. An address will be able to create cops, proportional to the amount of *Fe(X)* it has burned. This ensures that cops have a stake in the network's success and by colluding with bad actors they stand to loose value. Additionally one can not dominate a fair cops selection algorithm without putting stakes in the network. The number of cops required for an import value transaction *m* must also be correlated to the size of the transaction.
+To reduce the chance of above attacks, we constrain the ability of becoming a cop. Cops can be created based on PoB. An address will be able to create cops, proportional to the amount of *Fe(X)* it has burned. This ensures that cops have a stake in the network's success and by colluding with bad actors they stand to loose value. Additionally one can not dominate a fair cops selection algorithm without putting majority stakes in the network. The number of cops required for an import value transaction must also be correlated to the size of the transaction.
 
 #### Hamming Hash Adversary Selection Algorithm (HASA)
 
@@ -281,22 +281,22 @@ This protocol eliminates the ability of an ally to influence the adversary selec
 We propose Policed Adversarial Swap (PAS) to improve the security of MSDC and reduce the number of cops required for safer value import transactions. The PAS algorithm for value import is as follows:
 
 * Alice will present the import transaction to the network and requests for two sets of proposals. The cops and the adversary. Cop role is similar to MSDC with some key differences described later, and adversary is another user that also wants to import *X* into the network.
-* User will select one adversary and *n* cops using the Hamming Hash Adversary Selection Algorithm. We call the adversary Bob.
-* Alice will create a secret with hash *S_A* and hand it to a random cop.
-* Cops append *S_A* with a random salt and encrypt it using a *m* out of *n* key encryption scheme *K_A*.
-* Bob will create a secret with hash *S_B* and hand it to a random cop.
-* Cops append *S_B* with a random salt and encrypt it using a *m* out of *n* key encryption scheme *K_B*.
-* Alice creates a multi-signature address in *X* which can be spent from using her private key and the salted *S_B* plus Bob's original secret.
-* Bob creates a multi-signature address in *X* which can be spent from using his private key and the salted *S_A* plus Alice's original secret.
+* User will select one adversary and *n* cops using the Hamming Hash Adversary Selection Algorithm (HASA). We call the adversary Bob.
+* Alice will create a secret with hash *S_A* and reveal it to Bob.
+* Bob will create a secret with hash *S_B* and reveal it to Alice.
+* Alice creates a multi-signature address in *X* which can be spent from using her private key and Bob's original secret plus *n* cops signatures in a *m* out of *n* scheme.
+* Bob creates a multi-signature address in *X* which can be spent from using his private key and Alice's original secret plus *n* cops signatures in a *m* out of *n* scheme.
+* Alice and Bob submit above transactions on the *X* network and claim their *Fe(X)*
 
-Using above algorithm Alice and Bob have effectively swapped secrets through Cops. Therefore, any party that wants to spend their *X* would need co-operation from the adversary and *m* out of *n* cops. Alice and cops cannot also collude because they don't have Bob's original secret. However, Alice and Bob are motivated to remain available on request of the other party or they risk loosing their ability of recovering their *X*. If either of Alice or Bob decides to go offline without ever cash out, they both would be unable to recover their *X*. On the other hand Cops are interested to ensure that Alice and Bob can only cash out after they both destroy all *Fe(X)* they have created. In which case they will reveal the salt and the other party's secret. The cash out algorithm is as follows:
+Using above algorithm Alice and Bob have effectively swapped secrets guarded by Cops. Therefore, any party that wants to spend their *X* would need co-operation from the adversary and *m* out of *n* cops. Alice and cops cannot collude because they don't have Bob's original secret. However, Alice and Bob are motivated to remain available on request of the other party or they risk loosing their ability of recovering their *X*. If either of Alice or Bob decides to go offline without ever cashing out, they both will be unable to recover their *X*. On the other hand Cops are interested to ensure that Alice and Bob can only cash out after they both destroy all *Fe(X)* they have created. In which case they will sign the cash out transaction. To reduce the chance of burning *X*, the lock contracts can be timed to motivate both parties to synchronise their cash out. The cash out algorithm is as follows:
 
-* Alice and Bob agree to cash out. They can be enforce to synchronize their cash out using a timeout.
+* Alice and Bob agree to cash out. 
 * They destroy all created *Fe(X)*.
 * They inform *m* cops about the decisions and provide proof of destruction.
+* Once *m* cops confirm the destruction of *Fe(X)* they sign the cash out transaction and make the destruction irreversible by submitting their decision to the network.
 * Cops confirm that destructions are irreversible.
-* Alice and Bob then exchange secrets through cops and cops reveal the salts.
-* Alice and Bob now have all the necessary information to spend from their locked *X* address.
+* Alice and Bob then exchange secrets.
+* Alice and Bob can now spend from their locked *X* address.
 
 #### Collusion and Exploit Risks
 
@@ -304,15 +304,17 @@ Using the PAS value import algorithm, none of the parties will be able to game t
 
 To make the collusion much harder we propose the following process for defining cops: Each user can define a number of cops backed by PoB, for example a user with 1000 imported *X* through PoB, can define 1000 cops. An import transaction for 1000 *X* might require 50 cops. HASA will ensure that these 50 cops are unrelated. So one user with 1000 cops, has probably a very small part in 1000 independent value import transactions, however, they could loose all their cop privilege if they try to collude in one of these transactions. The collusion price would also be significantly small, because the stolen value need to be divided into hundreds or thousands. Capping the amount of each individual import transaction, can make collusion further unattractive.
 
+The PAS method significantly reduces the collusion risk but it still requires cops and adversary to be available and cooperative, otherwise it would be only as good as PoB. As long as the probability of uncooperative cops and adversaries is small (*P_F*) the PAS method is practical.
+
 #### Looking into Ferrum from Ethereum
 
-Ferrum network is designed to be able to look into other networks. Some of the techniques presented above for value import require smart contracts that can look into Ferrum network. In this section we propose a few method that enables this.
+Ferrum network is designed to be able to look into other networks. Some of the techniques presented above for value import require smart contracts that can look into Ferrum network. Works such as BTCRelay and TrueBit have created Ethereum smart contracts that can read from Bitcoin and Dodgecoin networks. Their methods do not work for the *Ferrum* network because they rely on the validation of the miners proof of work and block header. *Ferrum* does not have miners and submitting all *Ferrum* transaction headers to Ethereum is too expensive. In this section we propose a few method to enable reading *Ferrum* transactions from the Ethereum network. 
 
-* Reading from an endpoint: Ethereum smart contracts are able to read internet addresses. We can provide a range of publicly available endpoints for the Ferrum network that can be read by the smart contract.  A result will be deemed valid if absolute majority of the endpoint provide the same result. This allows for a couple of the endpoints to be hacked or unavailable at times. One needs to hack a few of the endpoint to temporarily disable the contract and hack absolute majority of the endpoints to steal the funds.
+* Reading from an endpoint: Ethereum smart contracts are able to read internet addresses. We can provide a range of publicly available endpoints for the Ferrum network that can be read by the smart contract.  A result will be deemed valid if absolute majority of the endpoint provide the same result. This allows for a couple of the endpoints to be hacked or unavailable at times. One needs to hack a few of the endpoint to temporarily disable the contract and hack absolute majority of the endpoints and their signatures to steal the funds.
  
-* Consistency votes: One can start a voting process on a smart contract for releasing funds without relying on an endpoint. Other users can validate if enough *Fe(X)* is burned on the Ferrum network and vote by presenting PoW. This method could be expensive because for it to be secure we require enough voters and voters would have to spend gas price on Ethereum. They would also need an incentive to engage in the process. Additionally one can potentially submit many votes and full the system.
+* Ethereum Cops: One can start a validation process on a smart contract for releasing funds without relying on an endpoint. Other users that we call Ethereum Cops can validate if enough *Fe(X)* is burned on the Ferrum network. Cops are users who present proof of stake by time-locking Ether and are selected according to *HAHA*.
 
-* Combination of endpoint and consistency votes: Another method is to use both above methods in combination to improve the security. Using combination of voting and reading from endpoint can make it harder to steal value but blocking a contract is not too hard. However, there is a cost for blocking a contract as the fake voters need to burn PoW and gas, while their attempt would be temporary. On the other hand, if Ferrum endpoints are hacked or become suddenly unreliable the voting mechanism could be used by the community to delay stealing values until the hack situation is resolved.
+* Combination of endpoint and Ethereum Cops: Another method is to use both above methods in combination to improve the security. Using combination of cops and reading from endpoint can make it harder to steal value. Blocking a contract is possible by hacking the endpoints and stealing their signature. Also if Ferrum endpoints are hacked or become suddenly unreliable, cops can block stealing funds until the hack situation is resolved.
 
 
 ## Conclusion
