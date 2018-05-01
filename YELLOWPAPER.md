@@ -306,6 +306,10 @@ To make the collusion much harder we propose the following process for defining 
 
 The PAS method significantly reduces the collusion risk but it still requires cops and adversary to be available and cooperative, otherwise it would be only as good as PoB. As long as the probability of uncooperative cops and adversaries is small (*P_F*) the PAS method is practical.
 
+### Lightning Netowrk as Value Import Mechanism
+
+[Lightning Network] (https://lightning.network/lightning-network-paper.pdf) is a method introduced to allow Bitcoin transactions off block-chain by creating a shared channel. Once users join a channel, they can perform tracsactions offline. The lightning network protocol allows parties within a channel to generate transactions between them and cash out without counter party risk. An implementation of Bitcoin lightening network can be supported inside *Ferrum*. In such case when Alice sends a *Fe(BTC)* to Bob, she signs the transaction not only using her *Ferrum* keys, but also her Bitcoin address. For this method to work Bob need to join the channel in Bitcoin before he can receive *Fe(BTC)*. Bob and Alice can cash out their *BTC* anytime they wish by submitting the transaction signed by Alice on the Bitcoin network, after which their *Fe(BTC)* become invalid. Within Ferrum network value generated throught the Lightning network protocol can interact with value generated through other types.
+
 #### Looking into Ferrum from Ethereum
 
 Ferrum network is designed to be able to look into other networks. Some of the techniques presented above for value import require smart contracts that can look into Ferrum network. Works such as BTCRelay and TrueBit have created Ethereum smart contracts that can read from Bitcoin and Dodgecoin networks. Their methods do not work for the *Ferrum* network because they rely on the validation of the miners proof of work and block header. *Ferrum* does not have miners and submitting all *Ferrum* transaction headers to Ethereum is too expensive. In this section we propose a few method to enable reading *Ferrum* transactions from the Ethereum network. 
