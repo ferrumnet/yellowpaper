@@ -93,6 +93,13 @@ Both roll-back and claim transaction point to *T_ax* as proof, but only one of t
 
 Any node that wants to accept an *Fe*, needs to be able to trace its value to the original proof of burn transaction that created that *Fe*. The tracing is not any different than chasing the parent of each transaction. The node needs to have the appropriate plugin installed to be able to validate the edge transaction and ensure the *Fe* has real value according to the external network.
 
+### Issuing Tokens
+
+Currently Ethereum network is used for issuing ERC-20 token. ERC-20 Tokens are not first class citizens of the Ethereum network. Instead, they are generated using a specific type of smart contract that manages gigantic hash-maps. This is on of the main reasons that the transactions on ERC-20 tokens are not scalable.
+
+ Ferrum is designed to allow developers to create new tokens. *Fe(BTC)* or *Fe(ETH)* are tokens that are backed by external value. In Ferrum, we introduce a new type of transaction, which we call the *Genesis Transaction*. The genesis transaction issues a new set of tokens that are not backed by anything. A genesis transaction has the following extra fields: *Number of tokens*, and *Is Open Ended*. The genesis transaction can be created by a smart contract or a normal account. The creator of an open ended genesis transaction can create more genesis transactions. The only account able to spend from the genesis transaction is the originator, being a normal account or a smart contract.
+
+
 ### Incentives
 
 To ensure the equivalence of values in the *Ferrum* network with the external network, it is specifically designed to be inflation free. Any inflation (creation of *Fe* not backed with an external currency) will create more *Fe(X)* than burned currency from *X*  which disrupts the value equivalency between *Fe(X)* and *X*. This means we cannot reward people with *Fe(X)* for converting external currencies.
@@ -182,6 +189,28 @@ One more potential risk of a naive flag bearer design is ability of starving som
 
 In summary, by introducing flag bearers  as high throughput nodes and randomizing normal nodes, the Ferrum network can scale as well as centralized systems with no compromise on the decentralized trust.
 
+### Hard Sharding for Scalability or Ferrum Colonies
+
+The fact that Ferrum is a network that can read into other networks, presents a new scalability paradigm to the decentralized networks, which we call **colonies**.
+
+Ferrum Colonies consists of a main network which would be connected to all external networks and is best suited for transaction settlements. Other communities can create a spin-off of the main Ferrum network, which can be specialised. Below are the properties of the Feruum spin-offs:
+
+- The only external network they can interact with is the main Ferrum network
+- They can create their own coins, and they can import any coin from the main network.
+- The only value import / export mechanism between the Main Ferrum and Spin-offs is proof of burn.
+- Addresses are not shared in both networks, a user should create a new address in the spin off or main to transfer value
+
+We also call above Scalability mechanism Hard Sharding, because it is effectively a sharding mechanism that completely partitions the network.
+
+In addition of scalability, Ferrum Colonies allows for specialization of sub-networks. For example a small nation state decides to adopt a digital currency, which they control completely, yet needs to interact with the external world. They can adopt a Ferrum spin-off for their economy and issue their currency without worrying about being dependent on a network that they do not control. Another example is a spin-off that is adopted by a scientific community to experiment study Genome models. Such network has specialized need such as very memory and processor heavy smart contracts, or high bandwidth and they want to limit submitting transactions on the network only to the members of the community. They can create a Ferrum spin-off for their specialized needs, yet be able to interact to the external world, sell their results, receive money, etc. through their connection to the Main Ferrum network.
+
+Although Ferrum makes interaction between networks possible, the Ferrum spin-offs have a much tighter interaction and movement of value and logic will be near seamless. You can think about the group of heterogeneous networks interacting with each other as countries with different currencies and strict borders, and the network of Ferrum colonies as the European Union, a collection networks with the same currency and seamless interaction, while each keep their own locality.
+
+### Data Layer
+
+Ferrum ultimately requires a highly scalable, distributed, and decentralized hash-map for storing data. The community is working to solve this problem. Projects such as *IPFS*, or *Bluzelle* [ref] are some examples. Therefore, Ferrum is designed with the replacability of the data layer in mind. We will replace the data layer with an appropriate technology once a fast, reliable, and mature option is available.
+
+
 ## Beyond Proof of Burn
 
 In this paper we proposed the concept of proof of burn (PoB) as the main source of importing value to the *Ferrum* network. PoB is not the only means to import value into the *Ferrum* network. In this section we propose several other ideas on the value import process.
@@ -269,6 +298,26 @@ We propose the following algorithm, called Adversary Selection Algorithm as a pr
 
 This protocol eliminates the ability of an ally to influence the adversary selection process. Even an ally with an infinite number of of potential candidates cannot search for a winning adversary.
 
+#### Adversary Pool
+
+To improve the speed of HASA algorithm, we can have a pool of adversaries ready for a given task with their private secret and public hash. We first construct *p* pools as follows:
+
+- One user submits a request to start pools. Only one pool request can run on the network at each time.
+- Other users register to be part of the adversary pool by publishing the hash of a random secret.
+- The registry closes after a timeout such as 24 hours. Transactions are considered in the timeout period if both their submission time and approval time are within the timeout.
+- All the participants from the registry are chosen in groups of 5 by creating a hash from the whole registry public addresses, then selecting the address with closest Hamming Distance from this hash.
+- Every other participant is selected by including the secret of the new address selected as a group member and finding the new closest address to the new hash.
+
+Pools are uniform representation of the whole network, so for an adversary to be able to control majority in a pool, they need to control more than $50%$ of the adversaries. However, there is a risk where an adversary with many adversaries addresses can have 3 adversaries in a 5 address pool. If he is willing to spend a lot of compute power, he can search for a transaction such that it's hash is closest the compromised pool. To prevent this situation, we propose the following pool selection algorithms:
+
+- User submits a transaction
+- The pool with hash closest to the transaction hash (hamming distance) is selected.
+- Members of the pool release a random secret.
+- A new pool is selected by hashing the random secrets with the transaction hash. 
+
+As long as there is at least one honest adversary in the pool, the new pool will be randomly selected. This method also ensures that the adversaries are live and ready for the task. In this model the adversary should compromise at least all 5 members of the pool and 3 members of a second pool.
+
+
 ### Policed Adversarial Swap
 
 We propose Policed Adversarial Swap (PAS) to improve the security of MSDC and reduce the number of cops required for safer value import transactions. The PAS algorithm for value import is as follows:
@@ -309,10 +358,41 @@ Ferrum network is designed to be able to look into other networks. Some of the t
 
 * Reading from an endpoint: Ethereum smart contracts are able to read internet addresses. We can provide a range of publicly available endpoints for the Ferrum network that can be read by the smart contract.  A result will be deemed valid if absolute majority of the endpoint provide the same result. This allows for a couple of the endpoints to be hacked or unavailable at times. One needs to hack a few of the endpoint to temporarily disable the contract and hack absolute majority of the endpoints and their signatures to steal the funds.
  
-* Ethereum Cops: One can start a validation process on a smart contract for releasing funds without relying on an endpoint. Other users that we call Ethereum Cops can validate if enough *Fe(X)* is burned on the Ferrum network. Cops are users who present proof of stake by time-locking Ether and are selected according to *HAHA*.
+* Ethereum Cops: One can start a validation process on a smart contract for releasing funds without relying on an endpoint. Other users that we call Ethereum Cops can validate if enough *Fe(X)* is burned on the Ferrum network. Cops are users who present proof of stake by time-locking Ether and are selected according to *HASA*.
 
 * Combination of endpoint and Ethereum Cops: Another method is to use both above methods in combination to improve the security. Using combination of cops and reading from endpoint can make it harder to steal value. Blocking a contract is possible by hacking the endpoints and stealing their signature. Also if Ferrum endpoints are hacked or become suddenly unreliable, cops can block stealing funds until the hack situation is resolved.
 
+
+## A New Paradigm for Smart Contracts
+
+The first network to include a smart contract was Bitcoin. The smart contracts are a computer programs that run in a decentralized way. Ethereum complemented the Bitoin's smart contract model by defining a touring complete deterministic universal scripting language. All miners run the smart contracts and the Proof of Work model in Ethereum blockchain provides maximum security.
+
+Although Ethereum's model is very secure, it is not scalable. The amount of computation needed in the network to run smart contracts increases by a square factor, making it very hard to scale. Other solutions have been proposed to take computes off-chain (such as [References Here]). Such methods use very complicated zero knowledge proof mechanisms. [ref to Enigma] proposes a Turing complete scripting language that operates and guarantees privacy, and runs off-chain computation, while presenting zero knowledge proof for the correctness of results. While these works are ambitious, they limit the type of computation possible. 
+
+Additionally, programming smart contracts is very hard, and the new scripting languages are limited in utility, tooling, libraries, and the amount of skilled people to use them.
+
+Ferrum defines a new paradigm for smart contracts. Ferrum's smart contracts are black-box programs written in any language or under any platform, run under a Linux container. Using methods that we introduced, such as HASA adversary selection, we present a new paradigm for running computation on a decentralized network (which is known as smart contracts). Ferrum's smart contracts can be thought of as executing cloud application in a decentralized network.
+
+Users can write their code using their favorite language, Python, Go, Java, etc. and package it with all the dependencies. They can use their existing tooling and programming knowledge to write a decentralized application (or dApp). This immediately explodes the number of people that can contribute to the decentralized ecosystem.
+
+Currently a user can write an application, package it with dependencies and run it on one of the common cloud providers, such as Amazon (AWS), Microsoft (Azure), or Google Compute Cloud. They pay for the resources they use to the cloud providers. We are turning this model upside down by allowing users to present their compute resources to the Ferrum network. They run decentralized applications and get paid for their resources in *Fe(PUR)*.
+
+We propose a flexible protocol that allows users to choose a trade-off between security and cost. Ferrum's decentralized application model is also scalable because the relationship between compute power required for the network and the scale of the network is linear.
+
+Users can engage in serving dApps by registering to the dApp adversary pools. Pools are selected according to the HASA algorithm described above. To prevent spamming the network, users spend some *Fe(PUR)* every time they join adversary pools.
+
+User writes and packages her application, creates a hash of the package, and publishes it to a centralized file server. She then registers her dApp to Ferrum by presenting the link to the application, the hash of the package binary, the minimum security level, memory, and number of cores required for execution of the dApp.
+
+She or any other user then submit a message to the registered dApp. They provide a security level they wish to run the dApp under and submit enough fees to execute the dApp with the new message. Hash of the transaction is determined to select the closes adversary pool. The closest adversary pool then reveal a random secret, which determines the second closest adversary pool. The adversary pool selection contibues to security level required for the message. For example, a message that is sent with the security level of 5, will skip first, and select 5 adversary pools.
+
+Adversaries run the dApp on a secured Linux container with no network address. The container would only have access to the messages sent to the dApp. Once the execution is completed, the adversary will publish the results to the network along with the CPU time.
+
+Once majority of adversaries published the results, they can claim their fees according to the average of CPU time spent on the dApp. The result of the dApp would be invalidated if majority of the adversaries did not produce the same result. Hence, if the dApp is not deterministic, the user will loose the gas fees. Additionally only adversaries that agree with majority get paid, to dis-incentivise lazy adversaries that do not run the dApp. If some dApp is not completely deterministic, an honest  adversary that does not agree with the majority would be at loss. However, on average dApp adversaries will make profit.
+
+To validating the contract outcome, validators run the following algorithm:
+
+- All who ran the contract sign the outcome, and point to their adversary pool.
+- Validator validates the correctness of adversary pool selection process, and the adversary pool formation process.
 
 ## Conclusion
 
