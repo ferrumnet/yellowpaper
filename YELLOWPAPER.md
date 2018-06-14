@@ -166,7 +166,7 @@ Figure 2. From (https://arxiv.org/pdf/0706.3322.pdf) showing the probability tha
 
 Since the distance between nodes does not grow too fast, load on nodes will grow as fast as the network, hence, size of the network is effectively bound by the processing power of the average node. This is a huge limiting factor. The typical next step to break down the load on the network is sharding, but sharding is not easy for the block-chain because of the consensus mechanism.
 
-In addition to the density of the network graph, block-chains are limited by the consensus mechanism. One can think of a block-chain as an exponentially expanding tree were the network has to work very hard to prune this exponentially large tree to only one branch. This property also makes blockchain specially sensitive to network partitions.
+In addition to the density of the network graph, block-chains are limited by the consensus mechanism. One can think of a block-chain as an exponentially expanding tree where the network has to work very hard to prune this exponentially large tree to only one branch. This property also makes blockchain specially sensitive to network partitions.
 
 A graph based network such as Ferrum on the other hand is self organizing, in the sense that no pruning of a tree is required. A graph will organically form. It can be partitioned but the partitions can be join together with new nodes. The consistency of the ledger is guaranteed by back tracking the graph, not pruning branches.
 
@@ -365,7 +365,7 @@ Ferrum network is designed to be able to look into other networks. Some of the t
 
 ## A New Paradigm for Smart Contracts
 
-The first network to include a smart contract was Bitcoin. The smart contracts are a computer programs that run in a decentralized way. Ethereum complemented the Bitoin's smart contract model by defining a touring complete deterministic universal scripting language. All miners run the smart contracts and the Proof of Work model in Ethereum blockchain provides maximum security.
+The first network to include a smart contract was Bitcoin. The smart contracts are a computer programs that run in a decentralized way. Ethereum complemented the Bitcoin's smart contract model by defining a turing complete deterministic universal scripting language. All miners run the smart contracts and the Proof of Work model in Ethereum blockchain provides maximum security.
 
 Although Ethereum's model is very secure, it is not scalable. The amount of computation needed in the network to run smart contracts increases by a square factor, making it very hard to scale. Other solutions have been proposed to take computes off-chain (such as [References Here]). Such methods use very complicated zero knowledge proof mechanisms. [ref to Enigma] proposes a Turing complete scripting language that operates and guarantees privacy, and runs off-chain computation, while presenting zero knowledge proof for the correctness of results. While these works are ambitious, they limit the type of computation possible. 
 
